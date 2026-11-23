@@ -1,57 +1,98 @@
-# nlp-06-nlp-pipeline
+# nlp-06-nlp-pipeline-custom
 
 [![Python 3.14](https://img.shields.io/badge/python-3.14%2B-blue?logo=python)](pyproject.toml)
-[![CI](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/ci-python-zensical.yml/badge.svg)](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/ci-python-zensical.yml)
-[![Documentation](https://img.shields.io/badge/docs-site-blue?logo=github)](https://denisecase.github.io/nlp-06-nlp-pipeline/)
+[![CI](https://github.com/BethSpornitz/nlp-06-nlp-pipeline-custom/actions/workflows/ci-python-zensical.yml/badge.svg)](https://github.com/BethSpornitz/nlp-06-nlp-pipeline-custom/actions/workflows/ci-python-zensical.yml)
+[![Documentation](https://img.shields.io/badge/docs-site-blue?logo=github)](https://BethSpornitz.github.io/nlp-06-nlp-pipeline-custom/)
 
 [![uv managed](https://img.shields.io/badge/uv-managed-DE5FE9)](https://docs.astral.sh/uv/)
 [![ty type checked](https://img.shields.io/badge/ty-type_checked-2F80ED)](https://docs.astral.sh/ty/)
 [![Zensical docs](https://img.shields.io/badge/Zensical-docs-purple)](https://zensical.org/)
 [![MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
-> Build a reproducible NLP pipeline for acquiring, processing, and analyzing web text.
+> A reproducible natural language processing pipeline for analyzing vocabulary patterns in academic research on clinical fall-risk assessment.
 
 ## Project Overview
 
-Author: Denise Case
+**Author:** Beth Spornitz
+**Date:** 2026 November
+**Course:** Web Mining and Applied NLP — Project 06
 
-Date: 2026 October
+This project demonstrates a complete natural language processing (NLP) pipeline for retrieving, cleaning, analyzing, and interpreting text from academic web documents.
 
-Sixth project in the Web Mining and Applied NLP course.
+The project builds on techniques introduced in earlier course modules, including web extraction, text preprocessing, structured data transformation, and visualization.
 
-This project introduces a complete natural language
-processing pipeline for working with web documents.
+It extends the Extract, Validate, Transform, Load (EVTL) architecture by adding an explicit Analyze stage.
 
-The goal is to retrieve HTML,
-validate document structure,
-extract and clean text,
-engineer NLP features,
-visualize patterns,
-and persist the results.
+The resulting architecture is **Extract, Validate, Transform, Analyze, Load (EVTAL)**.
 
-The project extends the EVTL approach
-from earlier modules by adding an explicit
-Analyze stage.
+The repository includes the instructor's original example pipeline and a separate custom implementation that analyzes an academic paper related to clinical fall-risk assessment.
 
-Specifically, it reuses frequency and charts from 01,
-cleaning from 02,
-the stage pattern from 04, and
-extraction from 05.
-Co-occurrence and bigrams were covered in 03,
-but are not required for this project.
+The custom project investigates how stopword removal affects token frequencies, vocabulary diversity, and the interpretation of text.
 
-The resulting architecture is
-Extract, Validate, Transform, Analyze, Load (EVTAL).
+Project configuration and dependencies are managed through [pyproject.toml](pyproject.toml).
 
-The project is configured in
-[pyproject.toml](pyproject.toml).
+## Original Example Project
+
+The original example was developed by Denise Case for the Web Mining and Applied NLP course.
+
+**Original repository:** [nlp-06-nlp-pipeline](https://github.com/denisecase/nlp-06-nlp-pipeline)
+
+**Original source:** [Agents of Chaos — arXiv 2602.20021](https://arxiv.org/abs/2602.20021)
+
+The example demonstrates an integrated NLP pipeline that retrieves an academic paper's abstract page from arXiv.
+
+The pipeline extracts bibliographic metadata, cleans and tokenizes the abstract, calculates vocabulary measures, generates visualizations, and saves the processed results.
+
+The original Python files are preserved in `src/nlp/` to maintain a working reference implementation.
+
+## Custom Project: Clinical Fall-Risk Assessment
+
+### Research Document
+
+The custom project analyzes the academic paper:
+
+**An Interpretable Data-Driven Approach to Optimizing Clinical Fall Risk Assessment**
+
+**Source:** [arXiv 2510.20714](https://arxiv.org/abs/2510.20714)
+
+This paper was selected during Module 5 and is reused in Module 6 to extend the earlier HTML extraction work into a complete NLP analysis.
+
+The topic is relevant to healthcare quality improvement and patient safety.
+
+### Analytical Question
+
+**How does stopword removal affect the vocabulary patterns and interpretation of an academic paper about clinical fall-risk assessment?**
+
+The analysis examines the frequency and diversity of words in the paper's abstract.
+
+Two preprocessing approaches are compared:
+
+1. **Stopwords removed:** Common stopwords are excluded to emphasize potentially meaningful vocabulary.
+2. **Stopwords retained:** Common stopwords remain in the text to provide a comparison of token frequencies and vocabulary measures.
+
+The comparison examines how preprocessing decisions influence the resulting analysis.
+
+### Project Objectives
+
+The custom project uses an EVTAL pipeline to:
+
+- Retrieve and preserve the academic paper's HTML.
+- Validate the expected HTML structure.
+- Extract the title, authors, abstract, and document metadata.
+- Clean and tokenize the abstract using spaCy.
+- Calculate total and unique token counts.
+- Calculate type-token ratios.
+- Identify frequently occurring tokens.
+- Generate token frequency charts and word clouds.
+- Compare results with and without stopword removal.
+- Save structured data and visualization artifacts.
+- Interpret the vocabulary patterns and limitations of the analysis.
 
 ## Data
 
-The example retrieves an academic paper's abstract page
-from [arXiv](https://arxiv.org/abs/2602.20021).
+Both the original and custom projects retrieve academic paper abstract pages from arXiv.
 
-The source document contains:
+The source documents contain bibliographic and textual information, including:
 
 - Paper title.
 - Authors.
@@ -60,174 +101,238 @@ The source document contains:
 - Submission information.
 - arXiv identifier.
 
-The pipeline preserves the original HTML,
-extracts document metadata,
-and produces a structured dataset
-with derived NLP features.
+The pipeline preserves the original HTML and transforms the extracted information into structured, analysis-ready data.
 
-## Approach
+The custom implementation uses separate output filenames to prevent its results from overwriting the instructor's example artifacts.
 
-The project uses a modular Python pipeline
-to acquire, validate, transform, analyze,
-and save web document data.
+## Methods and Approach
 
-The pipeline has five stages:
+The project uses a modular Python pipeline organized into five stages.
 
-- **Extract** - retrieve HTML from a web page.
-- **Validate** - verify required HTML elements.
-- **Transform** - extract metadata, clean text, and calculate NLP features.
-- **Analyze** - examine token frequencies and create visualizations.
-- **Load** - save the processed dataset to a CSV file.
+### Stage 1: Extract
 
-The example uses Requests for HTTP acquisition,
-BeautifulSoup for HTML parsing,
-spaCy for linguistic text processing,
-Pandas for tabular data,
-and Matplotlib and WordCloud for visualization.
+Requests retrieves the HTML document from arXiv.
 
-The Transform stage demonstrates:
+The original HTML is preserved for inspection and reproducibility.
 
-- Tokenization and text normalization.
-- Punctuation and stopword removal.
-- Abstract word counts.
-- Cleaned token counts.
-- Unique token counts.
-- Type-token ratios.
-- Author counts.
+### Stage 2: Validate
 
-Explore these important project components:
+BeautifulSoup parses the HTML document.
 
-- [pyproject.toml](pyproject.toml) - project identity, dependencies, and tool configuration.
-- [src/nlp/pipeline_web_html.py](src/nlp/pipeline_web_html.py) - main EVTAL pipeline orchestrator.
-- [src/nlp/config.py](src/nlp/config.py) - example web page and path configuration.
-- [src/nlp/stage01_extract.py](src/nlp/stage01_extract.py) - retrieve HTML.
-- [src/nlp/stage02_validate.py](src/nlp/stage02_validate.py) - validate HTML structure.
-- [src/nlp/stage03_transform.py](src/nlp/stage03_transform.py) - clean text and engineer NLP features.
-- [src/nlp/stage04_analyze.py](src/nlp/stage04_analyze.py) - analyze token frequencies and generate visualizations.
-- [src/nlp/stage05_load.py](src/nlp/stage05_load.py) - save processed results.
-- [tests/](tests/) - automated tests.
-- [.github/workflows/](.github/workflows/) - automated testing and documentation deployment.
-- [docs/](docs/) - project documentation.
-- [zensical.toml](zensical.toml) - documentation configuration.
+The validation stage checks for required elements before the data is transformed.
 
-The goal is to understand how an NLP pipeline
-transforms raw web content into structured,
-analysis-ready data with interpretable features.
+### Stage 3: Transform
 
-## spaCy Pipeline
+The pipeline extracts document metadata and processes the abstract text using spaCy.
 
-The project uses [spaCy](https://spacy.io/)
-for tokenization and for flagging
-stopwords and punctuation.
+Text preprocessing includes tokenization, normalization, punctuation filtering, and configurable stopword removal.
 
-The example uses the `en_core_web_sm`
-small English trained pipeline.
+Derived NLP features include:
 
-The package is declared in
-[pyproject.toml](pyproject.toml)
-and installs with the project dependencies.
+- Raw abstract word count.
+- Cleaned token count.
+- Unique token count.
+- Type-token ratio.
+- Author count.
 
-The example uses spaCy to split text into tokens
-and remove stopwords and punctuation.
-The same pipeline also provides part-of-speech tagging,
-dependency parsing, and named entity recognition.
-This example does not use those components.
+The **type-token ratio (TTR)** is calculated as:
 
-Text preprocessing remains useful in modern NLP,
-particularly when creating inspectable,
-repeatable analysis pipelines.
+`TTR = unique token count / total token count`
+
+The ratio provides a basic measure of vocabulary diversity.
+
+### Stage 4: Analyze
+
+The Analyze stage uses token frequency distributions to identify recurring vocabulary.
+
+The analysis includes:
+
+- Frequency counts using Python's `Counter`.
+- Horizontal bar charts of frequently occurring tokens.
+- Word clouds showing relative word frequency.
+- Comparison of token counts and type-token ratios across preprocessing approaches.
+
+The stopword comparison evaluates how removing common words changes the patterns visible in the results.
+
+### Stage 5: Load
+
+Pandas organizes the processed data into a structured dataset.
+
+The pipeline saves the results to CSV files and preserves the generated visualizations.
+
+Execution information is recorded through logging.
+
+## Preprocessing Comparison
+
+The custom project compares two approaches to processing the same academic abstract.
+
+| Feature | Stopwords Removed | Stopwords Retained |
+|---|---|---|
+| Source document | Clinical fall-risk paper | Clinical fall-risk paper |
+| Tokenization | spaCy | spaCy |
+| Text normalization | Applied | Applied |
+| Punctuation filtering | Applied | Applied |
+| Stopword filtering | Applied | Not applied |
+| Token frequency analysis | Included | Included |
+| Type-token ratio | Calculated | Calculated |
+| Visualizations | Generated | Generated |
+
+This comparison isolates stopword removal as the primary preprocessing difference.
+
+The analysis considers whether removing common words improves the visibility of topic-related vocabulary or eliminates information that may be meaningful.
+
+## Project Structure
+
+The original example files are preserved in `src/nlp/`.
+
+Custom processing files are organized separately in `src/nlp/custom/`.
+
+```text
+nlp-06-nlp-pipeline-custom/
+├── README.md
+├── pyproject.toml
+├── zensical.toml
+├── src/
+│   └── nlp/
+│       ├── __init__.py
+│       ├── config.py
+│       ├── pipeline_web_html.py
+│       ├── stage01_extract.py
+│       ├── stage02_validate.py
+│       ├── stage03_transform.py
+│       ├── stage04_analyze.py
+│       ├── stage05_load.py
+│       └── custom/
+│           ├── __init__.py
+│           ├── config_custom.py
+│           ├── pipeline_web_html_custom.py
+│           ├── stage01_extract_custom.py
+│           ├── stage02_validate_custom.py
+│           ├── stage03_transform_custom.py
+│           ├── stage04_analyze_custom.py
+│           └── stage05_load_custom.py
+├── data/
+│   ├── raw/
+│   └── processed/
+├── docs/
+├── tests/
+└── .github/
+    └── workflows/
+```
+
+The original and custom pipelines use separate configuration values and output filenames.
 
 ## Run the Project
 
-Follow the [Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/)
-to set up your machine and project environment.
+Follow the [Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/) to prepare the development environment.
 
-From a VS Code terminal in the project root:
+Open the repository in VS Code and run commands from the project root.
 
-```shell
+### Run the Original Example
+
+```powershell
 uv run python -m nlp.pipeline_web_html
 ```
 
-## Results
+### Run the Custom Pipeline
 
-The pipeline retrieves an HTML document,
-validates its structure,
-extracts bibliographic information,
-and cleans the abstract text.
-
-It calculates NLP features,
-produces frequency visualizations,
-and writes the results to a CSV file.
-
-Successful execution produces:
-
-```shell
-========================
-Pipeline executed successfully!
-========================
+```powershell
+uv run python -m nlp.custom.pipeline_web_html_custom
 ```
 
-The following files are created:
+The custom pipeline processes the clinical fall-risk assessment paper and supports the two preprocessing approaches used in the comparison.
 
-- `project.log` - pipeline execution log.
-- `data/raw/case_raw.html` - original HTML document.
-- `data/processed/case_processed.csv` - processed NLP dataset.
-- `data/processed/case_top_tokens.png` - token frequency bar chart.
-- `data/processed/case_wordcloud.png` - word cloud visualization.
+## Results and Visualizations
 
-These artifacts provide evidence of successful
-data acquisition, validation, transformation,
-analysis, and persistence.
+The pipelines produce structured datasets, execution logs, and visualizations.
 
-### Example Visualizations
+### Original Example Outputs
 
-![Top Tokens](docs/images/case_top_tokens.png)
+- `project.log` — pipeline execution log.
+- `data/raw/case_raw.html` — original HTML.
+- `data/processed/case_processed.csv` — processed dataset.
+- `data/processed/case_top_tokens.png` — token frequency chart.
+- `data/processed/case_wordcloud.png` — word cloud.
 
-![Word Cloud](docs/images/case_wordcloud.png)
+### Custom Project Outputs
+
+The custom project uses the following output naming convention:
+
+- `data/raw/fall_risk_raw.html`
+- `data/processed/fall_risk_processed.csv`
+- `data/processed/fall_risk_top_tokens.png`
+- `data/processed/fall_risk_wordcloud.png`
+
+Additional comparison outputs distinguish between stopwords-removed and stopwords-retained processing.
+
+The final analytical results, visualizations, and interpretations are presented in the [project documentation](https://BethSpornitz.github.io/nlp-06-nlp-pipeline-custom/).
+
+## Interpretation and Limitations
+
+The analysis examines whether the most frequently occurring tokens reflect the topic of clinical fall-risk assessment and how preprocessing affects those patterns.
+
+Token frequencies provide information about recurring vocabulary but do not independently establish the meaning or importance of a term.
+
+Type-token ratios provide a measure of vocabulary diversity but can be influenced by document length and preprocessing decisions.
+
+The analysis is limited to the abstract of one academic paper. Its vocabulary patterns may not represent the entire article or the broader clinical research literature.
+
+Additional limitations include potential information loss during cleaning and the inability of simple frequency counts to capture context, negation, or relationships between words.
+
+Detailed findings and comparisons are documented in `docs/index.md`.
 
 ## Verification
 
 Run the automated tests:
 
-```shell
+```powershell
 uv run python -m pytest
 ```
 
+Run linting, formatting, and type checks:
+
+```powershell
+uv run ruff check . --fix
+uv run ruff format .
+uv run ty check
+```
+
+Build the documentation:
+
+```powershell
+uv run python -m zensical build
+```
+
+These checks support reproducibility and help identify implementation problems.
+
 ## Project Documentation
 
-The [hosted documentation site](https://denisecase.github.io/nlp-06-nlp-pipeline/)
-is published using Zensical and GitHub Pages.
+The project documentation is published using Zensical and GitHub Pages.
 
-The documentation site is used to present the project report,
-covering such sections as data, methods, results, visualizations,
-interpretation, and conclusions.
+**Hosted documentation:** [Module 6 Custom Project Documentation](https://BethSpornitz.github.io/nlp-06-nlp-pipeline-custom/)
 
-For additional context about traditional NLP
-and modern language-model approaches,
-see [NLP Evolution](docs/nlp-evolution.md).
+The documentation presents the analytical question, data source, preprocessing methods, NLP features, visualizations, results, interpretation, and limitations.
+
+Additional background about traditional NLP and language models is available in [NLP Evolution](docs/nlp-evolution.md).
 
 ## CI/CD and GitHub Actions
 
-This project includes continuous integration and continuous deployment (CI/CD)
-to check project files and publish the docs.
+The repository includes GitHub Actions for continuous integration and documentation deployment.
 
-GitHub Actions include:
+- [CI: Python and Documentation Checks](https://github.com/BethSpornitz/nlp-06-nlp-pipeline-custom/actions/workflows/ci-python-zensical.yml)
+- [CD: Documentation Deployment](https://github.com/BethSpornitz/nlp-06-nlp-pipeline-custom/actions/workflows/deploy-zensical.yml)
 
-- [CI: Python and Documentation Checks](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/ci-python-zensical.yml)
-- [CD: Documentation Deployment](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/deploy-zensical.yml)
+These workflows support automated project verification and publication.
 
 ## Developer Reference
 
-Follow the
-[Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/)
-for **detailed instructions and troubleshooting**.
+Follow the [Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/) for detailed setup instructions and troubleshooting.
 
 ### Initialize and Update the Python Environment
 
-With the project open in VS Code, open a VS Code terminal.
-Paste each command and hit Enter or Return after to run it.
+Run each command from the VS Code terminal:
 
-```shell
+```powershell
 uvx pup-clean --delete
 uv self update
 uv python pin 3.14
@@ -239,29 +344,19 @@ uv audit
 
 ### Set Up and Run Git Hooks
 
-Set up and run the git hooks to perform
-basic checks automatically before
-any changes get pushed to GitHub.
-
-In the VS Code terminal,
-paste each command and hit Enter or Return after to run it.
-
-```shell
+```powershell
 uvx prek install --force
 uvx prek update --freeze --cooldown-days 7
 
 git add -A
 uvx prek run --all-files
-# repeat if changes were made
+# Repeat if changes were made
 uvx prek run --all-files
 ```
 
 ### Run Common Chores
 
-Run linters, formatters, type checks, tests, and
-build the documentation.
-
-```shell
+```powershell
 uv run ruff check . --fix
 uv run ruff format .
 
@@ -270,11 +365,11 @@ uv run python -m pytest
 uv run python -m zensical build
 ```
 
-### Git add-commit-push to GitHub
+### Git Add-Commit-Push to GitHub
 
-After making useful changes, save your work to GitHub.
+After making useful changes, save the work to GitHub.
 
-```shell
+```powershell
 git add -A
 git commit -m "describe your changes in quotes"
 git push -u origin main
@@ -282,24 +377,32 @@ git push -u origin main
 
 ## Developer Notes
 
-- Use the **UP ARROW** and **DOWN ARROW** in the terminal to scroll through past commands.
-- Use `CTRL+f` to find (and replace) text within a file.
+- Use the **UP ARROW** and **DOWN ARROW** in the terminal to scroll through previous commands.
+- Use **CTRL+F** to find text within a file.
+- Preserve the instructor's original working example files.
+- Keep custom code and configuration in `src/nlp/custom/`.
+- Verify outputs and visualizations before documenting analytical findings.
 
 ## Developer Tools
 
-This project uses professional Python tools to support development,
-testing, documentation, and code quality.
-
-- [uv](https://docs.astral.sh/uv/) - Python environments and dependencies.
-- [Ruff](https://docs.astral.sh/ruff/) - Python linting and formatting, configured in [.ruff.toml](.ruff.toml).
-- [ty](https://docs.astral.sh/ty/) - Python type checking.
-- [pytest](https://docs.pytest.org/) - automated Python testing, configured in [.pytest.toml](.pytest.toml).
-- [prek](https://prek.j178.dev/) - Git hooks and automated checks, configured in [prek.toml](prek.toml).
-- [Zensical](https://zensical.org/) - project documentation, configured in [zensical.toml](zensical.toml).
+- [uv](https://docs.astral.sh/uv/) — Python environments and dependencies.
+- [Ruff](https://docs.astral.sh/ruff/) — Python linting and formatting, configured in [.ruff.toml](.ruff.toml).
+- [ty](https://docs.astral.sh/ty/) — Python type checking.
+- [pytest](https://docs.pytest.org/) — automated testing, configured in [.pytest.toml](.pytest.toml).
+- [prek](https://prek.j178.dev/) — Git hooks and automated checks, configured in [prek.toml](prek.toml).
+- [Zensical](https://zensical.org/) — documentation generation, configured in [zensical.toml](zensical.toml).
+- [Requests](https://requests.readthedocs.io/) — HTTP requests.
+- [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) — HTML parsing.
+- [spaCy](https://spacy.io/) — linguistic text processing.
+- [Pandas](https://pandas.pydata.org/) — structured data processing.
+- [Matplotlib](https://matplotlib.org/) — data visualization.
+- [WordCloud](https://amueller.github.io/word_cloud/) — vocabulary visualization.
 
 ## Links
 
-- [Hosted Documentation](https://denisecase.github.io/nlp-06-nlp-pipeline/)
+- [Custom GitHub Repository](https://github.com/BethSpornitz/nlp-06-nlp-pipeline-custom)
+- [Hosted Documentation](https://BethSpornitz.github.io/nlp-06-nlp-pipeline-custom/)
+- [Original Instructor Repository](https://github.com/denisecase/nlp-06-nlp-pipeline)
 - [Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/)
 - [Citation](CITATION.cff)
 - [License](LICENSE)
