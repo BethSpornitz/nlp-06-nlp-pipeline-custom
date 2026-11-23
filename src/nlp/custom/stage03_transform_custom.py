@@ -1,6 +1,10 @@
-"""stage03_transform.py.
+"""Stage 03: Transform clinical fall-risk research text for NLP analysis.
 
-(EDIT YOUR VERSION OF THIS FILE)
+Author: Beth Spornitz
+Date: 2026-11
+
+Source: Validated BeautifulSoup object.
+Sink: Analysis-ready Pandas DataFrame.
 
 Source: validated BeautifulSoup object
 Sink:   analysis-ready Pandas DataFrame
@@ -139,36 +143,42 @@ def _get_text(element: Tag | None, strip_prefix: str = "", separator: str = "") 
     return text.replace(strip_prefix, "").strip() if strip_prefix else text
 
 
-def _clean_text(text: str, nlp_model: spacy.language.Language) -> str:
-    """Clean and normalize a text string for NLP analysis.
+def _clean_text(
+    text: str,
+    nlp_model: spacy.language.Language,
+    remove_stopwords: bool = True,
+) -> str:
+    """Clean text with optional stopword removal.
+
+    Lowercase text and remove punctuation and whitespace.
+    Stopword removal is configurable to support a controlled
+    comparison of preprocessing approaches.
 
     Args:
-        text (str): Raw text string to clean.
-        nlp_model: Loaded spaCy pipeline.
+        text: Raw text to clean.
+        nlp_model: Loaded spaCy language pipeline.
+        remove_stopwords: Whether to exclude stopwords.
 
     Returns:
-        str: Cleaned text string.
+        Cleaned text with tokens separated by spaces.
     """
-    # Step 1: Lowercase.
-    # WHY: "The" and "the" are the same word for analysis purposes.
-    # TRADEOFF: Proper nouns lose their case signal.
+    # Normalize case so capitalized and lowercase words match.
     text = text.lower()
 
-    # Step 2: Clean text by removing stopwords, punctuation, and extra whitespace using spaCy.
-    # WHY: Removing stopwords and punctuation reduces noise and focuses on meaningful content.
-    # TRADEOFF: Some stopwords matter in certain contexts (e.g., "not").
-    # TRADEOFF: Removing punctuation loses sentence boundary information.
-    # TRADEOFF: Hyphenated terms lose their compound meaning as a unit.
-    # Hyphenated terms like red-teaming are split by spaCy into red, -, teaming,
-    # and the hyphen is then dropped, so no fused tokens are produced.
+    # Tokenize once using spaCy.
     doc = nlp_model(text)
-    text = " ".join(
+
+    # Keep punctuation and whitespace filtering consistent.
+    # Only stopword removal differs between the two approaches.
+    tokens = [
         token.text
         for token in doc
-        if not (token.is_stop or token.is_punct or token.is_space)
-    )
+        if not token.is_punct
+        and not token.is_space
+        and (not remove_stopwords or not token.is_stop)
+    ]
 
-    return text
+    return " ".join(tokens)
 
 
 # ============================================================
@@ -301,6 +311,21 @@ def run_transform(
         _clean_text(abstract_raw, nlp) if abstract_raw != "unknown" else "unknown"
     )
 
+    # Create a second version of the same abstract with stopwords retained.
+    # WHY: Comparing both versions shows how stopword removal changes
+    # token frequencies and vocabulary diversity.
+    # Both versions use identical normalization and punctuation filtering.
+    abstract_clean_with_stopwords: str = (
+        _clean_text(abstract_raw, nlp, remove_stopwords=False)
+        if abstract_raw != "unknown"
+        else "unknown"
+    )
+
+    LOG.info(
+        "  abstract (stopwords retained): %s...",
+        abstract_clean_with_stopwords[:120],
+    )
+
     # Log before and after to make the cleaning effect visible
     LOG.info(f"  abstract (raw):   {abstract_raw[:120]}...")
     LOG.info(f"  abstract (clean): {abstract_clean[:120]}...")
@@ -369,6 +394,47 @@ def run_transform(
     LOG.info(f"  type_token_ratio:    {type_token_ratio}")
     LOG.info(f"  first 10 tokens:     {tokens[:10]}")
 
+    # ============================================================
+    # Compare preprocessing with stopwords retained
+    # ============================================================
+
+    # WHY: The original metrics exclude stopwords. These additional
+    # metrics allow us to compare both preprocessing approaches
+    # using the same source abstract.
+
+    tokens_with_stopwords: list[str] = (
+        abstract_clean_with_stopwords.split()
+        if abstract_clean_with_stopwords != "unknown"
+        else []
+    )
+
+    token_count_with_stopwords: int = len(tokens_with_stopwords)
+
+    unique_token_count_with_stopwords: int = len(set(tokens_with_stopwords))
+
+    type_token_ratio_with_stopwords: float = (
+        round(
+            unique_token_count_with_stopwords / token_count_with_stopwords,
+            4,
+        )
+        if token_count_with_stopwords > 0
+        else 0.0
+    )
+
+    LOG.info("STOPWORD COMPARISON:")
+    LOG.info("  Tokens without stopwords: %s", token_count)
+    LOG.info("  Tokens with stopwords: %s", token_count_with_stopwords)
+    LOG.info("  Unique tokens without stopwords: %s", unique_token_count)
+    LOG.info(
+        "  Unique tokens with stopwords: %s",
+        unique_token_count_with_stopwords,
+    )
+    LOG.info("  TTR without stopwords: %s", type_token_ratio)
+    LOG.info(
+        "  TTR with stopwords: %s",
+        type_token_ratio_with_stopwords,
+    )
+
     LOG.info("========================")
     LOG.info("PHASE 3.4: Build record and create DataFrame")
     LOG.info("========================")
@@ -386,6 +452,11 @@ def run_transform(
         "token_count": token_count,
         "unique_token_count": unique_token_count,
         "type_token_ratio": type_token_ratio,
+        "abstract_clean_with_stopwords": abstract_clean_with_stopwords,
+        "tokens_with_stopwords": " ".join(tokens_with_stopwords),
+        "token_count_with_stopwords": token_count_with_stopwords,
+        "unique_token_count_with_stopwords": unique_token_count_with_stopwords,
+        "type_token_ratio_with_stopwords": type_token_ratio_with_stopwords,
         "author_count": author_count,
     }
 

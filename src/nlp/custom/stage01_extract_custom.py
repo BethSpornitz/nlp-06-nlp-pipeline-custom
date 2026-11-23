@@ -1,20 +1,14 @@
-"""src/nlp/stage01_extract.py - Stage 01: Extract.
+"""Stage 01: Extract HTML for the custom clinical fall-risk NLP pipeline.
 
-NO EDITS REQUIRED IN THIS FILE (if paths have not changed.)
+Author: Beth Spornitz
+Date: 2026-11
 
-Source: HTML page at configured URL
-Sink:   Raw HTML file at RAW_HTML_PATH
+Source: arXiv abstract page configured in config_custom.py.
+Sink: Raw HTML file configured as RAW_HTML_PATH.
 
-The Extract stage is responsible for retrieving data
-from the source (in this case, an HTML page)
-and saving it to a file.
-It also returns the extracted data as a Python object
-for use in subsequent stages.
-
-Notes:
-- This file should not require modification.
+Retrieves the HTML document, saves it locally, and returns
+the content for validation and subsequent NLP processing.
 """
-
 # ============================================================
 # Section 1. Setup and Imports
 # ============================================================

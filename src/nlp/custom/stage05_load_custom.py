@@ -1,12 +1,15 @@
-"""src/nlp/stage05_load.py.
+"""Stage 05: Load processed clinical fall-risk NLP results.
 
-NO EDITS REQUIRED IN THIS FILE (if paths have not changed.)
+Author: Beth Spornitz
+Date: 2026-11
 
-Source: DataFrame (in this case, a Pandas DataFrame, change if using polars)
-Sink: CSV file
+Source: Pandas DataFrame containing both preprocessing versions.
+Sink: data/processed/fall_risk_processed.csv
 
-Notes:
-- This file should not require modification unless you change the DataFrame library.
+The CSV includes the original abstract features and the additional
+metrics comparing stopwords removed versus stopwords retained.
+
+The instructor's original CSV-writing logic is preserved.
 """
 
 # ============================================================

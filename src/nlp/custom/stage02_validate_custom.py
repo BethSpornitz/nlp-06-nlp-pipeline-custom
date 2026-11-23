@@ -1,25 +1,14 @@
-"""src/nlp/stage02_validate.py - Validate Stage.
+"""Stage 02: Validate HTML for the custom clinical fall-risk NLP pipeline.
 
-(EDIT YOUR VERSION OF THIS FILE)
+Author: Beth Spornitz
+Date: 2026-11
 
-Source: Raw HTML string
-Sink:   BeautifulSoup object (in memory)
+Source: Raw HTML retrieved from arXiv paper 2510.20714.
+Sink: Validated BeautifulSoup object in memory.
 
-Purpose
-
-  Validates that the expected page structure is present.
-
-Analytical Questions
-
-- What is the top-level structure of the HTML document?
-- What elements are present in the document?
-- What data types are associated with each field?
-- Does the data meet expectations for transformation?
-
-Edit your Python file to:
-- inspect the HTML structure for your API,
-- validate the presence of required HTML elements,
-- confirm the data is usable for your analysis.
+Inspects the HTML structure and verifies that the title,
+authors, abstract, subject categories, and submission
+information are present before transformation.
 """
 
 # ============================================================

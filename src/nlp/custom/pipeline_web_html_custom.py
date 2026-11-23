@@ -1,50 +1,21 @@
-"""src/nlp/pipeline_web_html.py - Module 6 Script.
+"""Run the custom EVTAL pipeline for clinical fall-risk research.
 
-NO EDITS REQUIRED IN THIS FILE (if the paths have not changed.)
+Author: Beth Spornitz
+Date: 2026-11
 
-Purpose
+Source: https://arxiv.org/abs/2510.20714
 
-  Orchestrate a standard EVTAL pipeline for web document data.
-  Illustrate how to fetch an HTML page, validate its structure,
-  transform and clean it into structured data,
-  analyze patterns in the text, and load results into a sink.
-  Illustrate how to parse HTML using BeautifulSoup to extract
-  metadata from a web document.
+EVTAL: Extract, Validate, Transform, Analyze, Load.
 
-
-Analytical Questions
-
-- How can we fetch an HTML page from the web and save it to a file?
-- How can we validate the structure and content of an HTML document?
-- How can we transform HTML into clean, analysis-ready structured data?
-- How can we analyze text data to surface frequency patterns and visualizations?
-- How can we load the transformed data into a sink (like a CSV file)?
-
-Notes:
-- This file should not require modification.
-- This is the main pipeline script that orchestrates the entire EVTAL process.
-- EVTAL: Extract, Validate, Transform, Analyze, Load.
-- The stages are modularized into separate files for clarity and
-  maintainability.
-- Each stage has its own source and sink, which are clearly indicated
-  in the stage files.
-- The configuration values (like the page URL and file paths) are stored
-  in a separate config file.
-
-Run from root project folder with:
-
-  uv run python -m nlp.pipeline_web_html
+Run from the project root:
+    uv run python -m nlp.custom.pipeline_web_html_custom
 """
-
-# ============================================================
-# Section 1. Setup and Imports
-# ============================================================
 
 import logging
 
 from datafun_toolkit.logger import get_logger, log_header, log_path
 
-from nlp.config import (
+from nlp.custom.config_custom import (
     DATA_PATH,
     HTTP_REQUEST_HEADERS,
     PAGE_URL,
@@ -54,28 +25,19 @@ from nlp.config import (
     RAW_PATH,
     ROOT_PATH,
 )
-from nlp.stage01_extract import run_extract
-from nlp.stage02_validate import run_validate
-from nlp.stage03_transform import run_transform
-from nlp.stage04_analyze import run_analyze
-from nlp.stage05_load import run_load
-
-# ============================================================
-# Section 2. Configure Logging
-# ============================================================
+from nlp.custom.stage01_extract_custom import run_extract
+from nlp.custom.stage02_validate_custom import run_validate
+from nlp.custom.stage03_transform_custom import run_transform
+from nlp.custom.stage04_analyze_custom import run_analyze
+from nlp.custom.stage05_load_custom import run_load
 
 LOG: logging.Logger = get_logger("CI", level="DEBUG")
 
 
-# ============================================================
-# Section 3. Define Main Pipeline Function
-# ============================================================
-
-
 def main() -> None:
-    """Main function for the EVTAL pipeline."""
-    log_header(LOG, "Module 6: EVTAL PIPELINE - WEB DOCUMENTS (HTML)")
-    LOG.info("START PIPELINE")
+    """Execute the custom clinical fall-risk EVTAL pipeline."""
+    log_header(LOG, "Module 6: CUSTOM CLINICAL FALL-RISK EVTAL PIPELINE")
+    LOG.info("START CUSTOM PIPELINE")
 
     RAW_PATH.mkdir(parents=True, exist_ok=True)
     PROCESSED_PATH.mkdir(parents=True, exist_ok=True)
@@ -119,13 +81,9 @@ def main() -> None:
     )
 
     LOG.info("========================")
-    LOG.info("Pipeline executed successfully!")
+    LOG.info("Custom pipeline executed successfully!")
     LOG.info("========================")
 
-
-# ============================================================
-# Section 4. Run Main Function when This File is Executed
-# ============================================================
 
 if __name__ == "__main__":
     main()
