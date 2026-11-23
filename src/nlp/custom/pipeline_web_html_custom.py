@@ -1,7 +1,8 @@
 """Run the custom EVTAL pipeline for clinical fall-risk research.
 
-Author: Beth Spornitz
-Date: 2026-11
+Original author: Denise Case
+Modified by: Beth Spornitz
+Modification date: 2026-11
 
 Source: https://arxiv.org/abs/2510.20714
 

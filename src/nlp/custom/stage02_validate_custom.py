@@ -1,7 +1,8 @@
 """Stage 02: Validate HTML for the custom clinical fall-risk NLP pipeline.
 
-Author: Beth Spornitz
-Date: 2026-11
+Original author: Denise Case
+Modified by: Beth Spornitz
+Modification date: 2026-11
 
 Source: Raw HTML retrieved from arXiv paper 2510.20714.
 Sink: Validated BeautifulSoup object in memory.

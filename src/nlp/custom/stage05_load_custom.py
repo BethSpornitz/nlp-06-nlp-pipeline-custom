@@ -1,7 +1,9 @@
 """Stage 05: Load processed clinical fall-risk NLP results.
 
-Author: Beth Spornitz
-Date: 2026-11
+Original author: Denise Case
+Modified by: Beth Spornitz
+Modification date: 2026-11
+
 
 Source: Pandas DataFrame containing both preprocessing versions.
 Sink: data/processed/fall_risk_processed.csv

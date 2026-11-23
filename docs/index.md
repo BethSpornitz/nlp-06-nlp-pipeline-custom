@@ -59,6 +59,22 @@ and other derived text features.
 The Analyze stage produces a token frequency chart
 and a word cloud.
 
+## Custom Modifications
+
+I changed the default top_n parameter in
+src/nlp/stage04_analyze.py from 20 to 15
+to create a more focused token frequency chart.
+
+I predicted that the chart and terminal summary
+would display 15 tokens instead of 20, while
+the underlying token counts would remain unchanged.
+
+The modified pipeline ran successfully, and
+the results matched my prediction. The original
+abstract still contained 177 words, 130 cleaned
+tokens, and 118 unique tokens, with a
+type-token ratio of 0.9077.
+
 ## Verification
 
 A successful execution displays:

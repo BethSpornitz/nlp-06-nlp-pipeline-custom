@@ -45,6 +45,12 @@ The pipeline extracts bibliographic metadata, cleans and tokenizes the abstract,
 
 The original Python files are preserved in `src/nlp/` to maintain a working reference implementation.
 
+## Technical Modification to the Original Example
+
+I modified `src/nlp/stage04_analyze.py` to display the 15 most frequent tokens instead of 20. This produces a more focused frequency chart and terminal summary.
+
+The modified pipeline ran successfully, and the underlying text statistics remained unchanged. The original example and my separate clinical fall-risk implementation are both retained in this repository.
+
 ## Custom Project: Clinical Fall-Risk Assessment
 
 ### Research Document

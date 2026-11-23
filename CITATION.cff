@@ -1,67 +1,64 @@
+
 # ============================================================
 # CITATION.cff (How to cite this project)
 # ============================================================
-
-# REQ.UNIVERSAL: Professional open projects SHOULD include CITATION.cff.
-# WHY: Support correct citation and attribution.
-# ALT: Internal or private repositories may omit citation metadata.
-# CUSTOM: Update author, repository, license, and keyword fields as needed.
-# USAGE: See https://citation-file-format.github.io/ for details.
+# Updated: 2026-11-23
+#
+# This project adapts the original EVTAL NLP pipeline
+# developed by Denise M. Case.
+# Custom implementation and analysis by Beth Spornitz.
+# ============================================================
 
 cff-version: "1.2.0"
 type: software
 
-title: "Web Mining and Applied NLP 06: EVTAL NLP Pipeline"
-date-released: "2026-04-02"
+title: "Web Mining and Applied NLP 06: Clinical Fall-Risk NLP Pipeline"
 
 authors:
+  - family-names: Spornitz
+    given-names: Beth
+
   - family-names: Case
     given-names: Denise M.
     orcid: "https://orcid.org/0000-0001-6165-7389"
     affiliation: "Northwest Missouri State University, USA"
 
-repository-code: "https://github.com/denisecase/nlp-06-nlp-pipeline"
-url: "https://github.com/denisecase/nlp-06-nlp-pipeline"
+repository-code: "https://github.com/BethSpornitz/nlp-06-nlp-pipeline-custom"
+url: "https://BethSpornitz.github.io/nlp-06-nlp-pipeline-custom/"
 license: MIT
 
 abstract: |
-  Web Mining and Applied NLP Example Project 6 - extracting structured data
-  from HTML web pages using an EVTAL pipeline, BeautifulSoup, Pandas, and spaCy.
-  Demonstrates web scraping, HTML parsing, text cleaning, tokenization, and
-  transformation of web content into analysis-ready tabular data.
+  A reproducible natural language processing pipeline for analyzing
+  vocabulary patterns in academic research on clinical fall-risk
+  assessment. This project adapts the EVTAL pipeline developed by
+  Denise M. Case and applies it to an academic paper on clinical
+  fall-risk assessment. The custom analysis compares token
+  frequencies and vocabulary diversity with and without stopword
+  removal using Python, BeautifulSoup, Pandas, and spaCy.
 
 keywords:
-  # identity
   - data analytics
   - web mining
   - web scraping
-  - natural language processing (NLP)
-
-  # concepts
+  - natural language processing
+  - clinical fall risk
+  - patient safety
+  - healthcare research
+  - stopword removal
+  - vocabulary analysis
   - html parsing
   - evtal pipeline
   - data extraction
   - text cleaning
   - tokenization
-  - linguistic tokenization
   - frequency analysis
-
-  # practices
-  - professional workflows
   - reproducible workflows
-  - software quality
-
-  # tools and ecosystem
   - python
-  - git
-  - github
-  - pre-commit
-  - uv
-  - ruff
   - pandas
   - beautifulsoup4
   - requests
   - spacy
-  - en-core-web-sm
+  - matplotlib
+  - wordcloud
 
 message: "If using this project, please cite it as described in this file."

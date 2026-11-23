@@ -1,7 +1,9 @@
 """Stage 01: Extract HTML for the custom clinical fall-risk NLP pipeline.
 
-Author: Beth Spornitz
-Date: 2026-11
+Original author: Denise Case
+Modified by: Beth Spornitz
+Modification date: 2026-11
+
 
 Source: arXiv abstract page configured in config_custom.py.
 Sink: Raw HTML file configured as RAW_HTML_PATH.

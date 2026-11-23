@@ -1,7 +1,9 @@
 """Stage 03: Transform clinical fall-risk research text for NLP analysis.
 
-Author: Beth Spornitz
-Date: 2026-11
+Original author: Denise Case
+Modified by: Beth Spornitz
+Modification date: 2026-11
+
 
 Source: Validated BeautifulSoup object.
 Sink: Analysis-ready Pandas DataFrame.
