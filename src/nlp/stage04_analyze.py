@@ -1,6 +1,8 @@
 """stage04_analyze.py.
 
-(MODIFY YOUR VERSION OF THIS FILE)
+Original author: Denise Case
+Modified by: Beth Spornitz
+Modification date: 2026-11
 
 Source: analysis-ready Pandas DataFrame (from Transform stage)
 Sink:   visualizations saved to data/processed/
@@ -193,7 +195,7 @@ def run_analyze(
     df: pd.DataFrame,
     LOG: logging.Logger,
     output_dir: Path = Path("data/processed"),
-    top_n: int = 20,
+    top_n: int = 15,
 ) -> None:
     """Analyze the transformed DataFrame and produce visualizations.
 
