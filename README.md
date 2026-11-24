@@ -260,18 +260,25 @@ The pipelines produce structured datasets, execution logs, and visualizations.
 - `data/processed/case_top_tokens.png` — token frequency chart.
 - `data/processed/case_wordcloud.png` — word cloud.
 
+
 ### Custom Project Outputs
 
-The custom project uses the following output naming convention:
+The custom pipeline generates the following files:
 
-- `data/raw/fall_risk_raw.html`
-- `data/processed/fall_risk_processed.csv`
-- `data/processed/fall_risk_top_tokens.png`
-- `data/processed/fall_risk_wordcloud.png`
+- `data/raw/fall_risk_raw.html` — original HTML.
+- `data/processed/fall_risk_processed.csv` — processed dataset containing both preprocessing approaches.
+- `data/processed/fall_risk_top_tokens.png` — token frequency chart with stopwords removed.
+- `data/processed/fall_risk_top_tokens_with_stopwords.png` — token frequency chart with stopwords retained.
+- `data/processed/fall_risk_wordcloud.png` — word cloud with stopwords removed.
+- `data/processed/fall_risk_wordcloud_with_stopwords.png` — word cloud with stopwords retained.
 
-Additional comparison outputs distinguish between stopwords-removed and stopwords-retained processing.
+Copies of the four custom visualizations are included in
+`docs/images/` for display on the published documentation site.
 
-The final analytical results, visualizations, and interpretations are presented in the [project documentation](https://BethSpornitz.github.io/nlp-06-nlp-pipeline-custom/).
+The final analytical results, visualizations, and interpretations
+are presented in the
+[project documentation](https://BethSpornitz.github.io/nlp-06-nlp-pipeline-custom/).
+
 
 ## Interpretation and Limitations
 
