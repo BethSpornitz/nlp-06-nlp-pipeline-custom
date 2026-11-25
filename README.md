@@ -13,8 +13,8 @@
 
 ## Project Overview
 
-**Author:** Beth Spornitz
-**Date:** 2026 November
+**Author:** Beth Spornitz\
+**Date:** 2026 November\
 **Course:** Web Mining and Applied NLP — Project 06
 
 This project demonstrates a complete natural language processing (NLP) pipeline for retrieving, cleaning, analyzing, and interpreting text from academic web documents.
