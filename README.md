@@ -31,6 +31,13 @@ The custom project investigates how stopword removal affects token frequencies, 
 
 Project configuration and dependencies are managed through [pyproject.toml](pyproject.toml).
 
+## Detailed Project Report
+
+For the complete methodology, comparative results,
+token frequency charts, word clouds, interpretation,
+limitations, and potential future enhancements, visit
+the [published project report](https://bethspornitz.github.io/nlp-06-nlp-pipeline-custom/).
+
 ## Original Example Project
 
 The original example was developed by Denise Case for the Web Mining and Applied NLP course.
